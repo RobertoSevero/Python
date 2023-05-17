@@ -19,22 +19,67 @@ class Programa:
     def nome(self, novo_nome):
         self._nome = novo_nome.title
 
+    def __str__(self):
+        return f'{self._nome} - {self.ano} - {self.duracao} min - {self._likes} Likes'
+
 class Filme(Programa):
     def __init__(self, nome, ano, duracao):
         super().__init__(nome, ano)
         self.duracao = duracao
+
+    def __str__(self):
+        return f'{self._nome} - {self.ano} - {self.duracao} min - {self._likes} Likes'
 
 class Serie(Programa):
     def __init__(self, nome, ano, temporadas):
         super().__init__(nome, ano)
         self.temporadas = temporadas
 
+    def __str__(self):
+        return f'{self._nome} - {self.ano} - {self.temporadas} temporadas - {self._likes} Likes'
+
+class Playlist:
+    def __init__(self, nome, programas):
+        self.nome = nome
+        self._programas = programas
+
+    def __getitem__(self, item):
+        return self._programas[item]
+
+    @property
+    def listagem(self):
+        return self._programas
+
+    @property
+    def tamanho(self):
+        return len(self._programas)
+
 
 vingadores = Filme('vingadores - guerra infinita', 2018, 160)
-print(f'{vingadores.nome} - {vingadores.ano} - {vingadores.duracao}: {vingadores.likes}')
 atlanta = Serie ('atlanta', 2018, 2)
-atlanta.dar_like()
-atlanta.dar_like()
-print(f'{atlanta.nome} - {atlanta.ano} - {atlanta.temporadas}: {atlanta.likes}')
+tmep = Filme('Todo mundo em pânico', 1999, 100)
+demolidor = Serie('Demolidor', 2016, 2)
 
+vingadores.dar_like()
+tmep.dar_like()
+tmep.dar_like()
+tmep.dar_like()
+demolidor.dar_like()
+demolidor.dar_like()
+demolidor.dar_like()
+demolidor.dar_like()
+atlanta.dar_like()
+atlanta.dar_like()
+
+filmes_e_series = [vingadores, atlanta, demolidor, tmep]
+playlist_fim_de_semana = Playlist('fim de semana', filmes_e_series)
+
+print(f'Tamanho do pllaylist: {len(playlist_fim_de_semana.listagem)}')
+
+print(demolidor in playlist_fim_de_semana)
+
+for programa in playlist_fim_de_semana.listagem:
+    print(programa)
+
+print(f'Tá ou não tá? {demolidor in playlist_fim_de_semana}')
 
